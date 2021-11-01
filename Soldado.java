@@ -14,17 +14,15 @@ class Soldado {
 	private int fila;
 	private int columna;
 		
-	// 	Metodos mutadores
-		
-	Soldado (){
-		nombre=null;
+	public Soldado() {
+		nombre="Anonimo";
 		nivelAtaque=0;
 		nivelDefensa=0;
 		nivelVida=0;
 		vidaActual=0;
 		velocidad=0;
-		actitud=null;
-		vive=null;
+		actitud="Desconocido";
+		vive=true;
 	}
 	
 	// SET ---------------------------
@@ -34,11 +32,23 @@ class Soldado {
 	public void setNivelAtaque(int atclevel) {
 		nivelAtaque = atclevel;
 	}	
+	public void setNivelAtaque(int deflevel,String act) {
+		nivelDefensa = deflevel;
+		actitud = act;
+	}
 	public void setNivelDefensa(int deflevel) {
 		nivelDefensa = deflevel;
 	}	
+	public void setNivelDefensa(int deflevel,String act) {
+		nivelDefensa = deflevel;
+		actitud = act;
+	}	
 	public void setNivelVida(int lifelevel) {
 		nivelVida = lifelevel;
+	}	
+	public void setNivelVida(int lifelevel,int hp) {
+		nivelVida = lifelevel;
+		vidaActual = hp;
 	}	
 	public void setVidaActual(int hp) {
 		vidaActual = hp;
@@ -90,5 +100,42 @@ class Soldado {
 	}
 	public int getColumna() {
 		return columna;
+	}
+	
+	// MÉTODOS ESPECIALES 
+	
+	public void atacar() {
+		avanzar();
+		actitud="Ofensivo";
+	}
+	
+	public void defender() {
+		retroceder();
+	}
+	
+	public void avanzar() {
+		velocidad=1;
+	}
+	public void retroceder() {
+		if (velocidad>0) {
+			velocidad=0;
+			actitud="Defensivo";
+		}
+		else {
+			velocidad--;
+		}
+	}
+	public void serAtacado() {
+		vidaActual--;
+		if (vidaActual<=0) {
+			morir();
+		}
+	}
+	public void huir() {
+		velocidad=2;
+		actitud="Fuga";
+	}
+	public void morir() {
+		vive=false;
 	}
 }

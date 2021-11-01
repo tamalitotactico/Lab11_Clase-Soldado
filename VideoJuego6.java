@@ -116,50 +116,53 @@ public class VideoJuego6 {
 	}
 	
 	
-	public static void imprimirEjercito(HashMap<String,Soldado>ejercito,int a) {
+	public static void imprimirEjercito(ArrayList<Soldado>ejercito,int a) {
 
 		System.out.println("_____________________________________________"
 				+ "____________________\n\nEjercito "+a+":\n");
 		for (int i=0;i<ejercito.size();i++) {
-			String key="Soldado"+i+"x"+a;
-			System.out.println(key+"\t-\t"+"Columna: "+(ejercito.get(key).getColumna()+1)
-					+" \tFila: "+(ejercito.get(key).getFila()+1)+" \tVida: "+ejercito.get(key).getVida());;
+			System.out.println("Nombre: "+ejercito.get(i).getNombre()+"\t-\t"+"Columna: "+
+			(ejercito.get(i).getColumna()+1)+" \tFila: "+(ejercito.get(i).getFila()+1)+" \tVida"+
+			ejercito.get(i).getVidaActual()+" Ataque: "+ejercito.get(i).getNivelAtaque()+" Defensa: "+
+			ejercito.get(i).getNivelDefensa());
 		}
 		
 	}
 	
-	public static void imprimirSoldadoFuerte(HashMap<String,Soldado>ejercito1,HashMap<String,Soldado>ejercito2) {
+	public static void imprimirSoldadoFuerte(ArrayList<Soldado>ejercito1,ArrayList<Soldado>ejercito2) {
 		Soldado fuerte1 = new Soldado();
 		Soldado fuerte2 = new Soldado();
 		
-		fuerte1.setVida(0);
-		fuerte2.setVida(0);
+		fuerte1.setVidaActual(0);
+		fuerte2.setVidaActual(0);
 
-		for (String key1:ejercito1.keySet())
-			if (ejercito1.get(key1).getVida()>fuerte1.getVida()) {
-				fuerte1=ejercito1.get(key1);
-			};
+		for (int i=0;i<ejercito1.size();i++) {
+			if (ejercito1.get(i).getVidaActual()>fuerte1.getVidaActual()) {
+				fuerte1=ejercito1.get(i);
+			}
+		}
 			
-		for (String key2:ejercito2.keySet())
-			if (ejercito2.get(key2).getVida()>fuerte2.getVida()) {
-				fuerte2=ejercito2.get(key2);
-			};
+		for (int i=0;i<ejercito2.size();i++) {
+			if (ejercito2.get(i).getVidaActual()>fuerte1.getVidaActual()) {
+				fuerte2=ejercito2.get(i);
+			}
+		}
 			
 		System.out.println("_____________________________________________"
 				+ "____________________\n\nSoldados más fuertes:\n");
 		
 		System.out.println(fuerte1.getNombre()+"\t-\t"+"Columna: "+(fuerte1.getColumna()+1)
-				+" \tFila: "+(fuerte1.getFila()+1)+" \tVida: "+fuerte1.getVida());;		
+				+" \tFila: "+(fuerte1.getFila()+1)+" \tVida: "+fuerte1.getVidaActual());;		
 		System.out.println(fuerte2.getNombre()+"\t-\t"+"Columna: "+(fuerte2.getColumna()+1)
-				+" \tFila: "+(fuerte2.getFila()+1)+" \tVida: "+fuerte2.getVida());;
+				+" \tFila: "+(fuerte2.getFila()+1)+" \tVida: "+fuerte2.getVidaActual());;
 				
 		System.out.println("_____________________________________________"
 				+ "____________________\n");
 	}
 	
-	public static void ordenamientoBurbuja(HashMap<String,Soldado>ejercito,int a) {
+	public static void ordenamientoBurbuja(ArrayList<Soldado>ejercito,int a) {
 		
-		HashMap<String,Soldado>ejercitoTemp = new HashMap<String,Soldado>();
+		ArrayList<Soldado>ejercitoTemp = new ArrayList<Soldado>();
 		Soldado temp = new Soldado();
 		
 		System.out.println("Ordenamiento Burbuja: \n");
@@ -168,60 +171,57 @@ public class VideoJuego6 {
 			for (int j=0;j<ejercito.size()-1;j++) {
 				String soldier = "Soldado"+j+"x"+a;
 				
-				if (ejercito.get(soldier).getVida()<(ejercito.get("Soldado"+(j+1)+"x"+a)).getVida()) {
-					temp=ejercito.get("Soldado"+j+"x"+a);
-					ejercito.put(soldier, ejercito.get("Soldado"+(j+1)+"x"+a));
-					ejercito.put("Soldado"+(j+1)+"x"+a, temp);
+				if (ejercito.get(j).getVidaActual()<(ejercito.get(j+1).getVidaActual())) {
+					temp=ejercito.get(j);
+					ejercito.set(j, ejercito.get(j+1));
+					ejercito.set(j+1, temp);
 				}
 			}
 		}
 		
 		for (int i=0;i<ejercito.size();i++) {
-			ejercitoTemp.put(ejercito.get("Soldado"+i+"x"+a).getNombre(), ejercito.get("Soldado"+i+"x"+a));
-			System.out.println(ejercito.get("Soldado"+i+"x"+a).getNombre()+"\t-\tColumna: "+
-			ejercito.get("Soldado"+i+"x"+a).getColumna()+"\tFila: "+ejercito.get("Soldado"+i+"x"+a).getFila()
-			+"  \tVida: "+ejercito.get("Soldado"+i+"x"+a).getVida());
+			System.out.println("Nombre: "+ejercito.get(i).getNombre()+"\t-\t"+"Columna: "+
+			(ejercito.get(i).getColumna()+1)+" \tFila: "+(ejercito.get(i).getFila()+1)+" \tVida"+
+			ejercito.get(i).getVidaActual());
 		}
 	}
 	
-	public static void ordenamientoSeleccion(HashMap<String,Soldado>ejercito,int a) {
+	public static void ordenamientoSeleccion(ArrayList<Soldado>ejercito,int a) {
 		
-		HashMap<String,Soldado>ejercitoTemp = new HashMap<String,Soldado>();
-		String min;
+		ArrayList<Soldado>ejercitoTemp = new ArrayList<Soldado>();
+		int min;
 		Soldado aux;
 		for(int i=0;i<ejercito.size();i++) {
-			min= "Soldado"+i+"x"+a;
+			min= i;
 			
 			for (int j=i+1;j<ejercito.size();j++) {
-				String soldier = "Soldado"+j+"x"+a;
-				if (ejercito.get(soldier).getVida()>ejercito.get("Soldado"+i+"x"+a).getVida()) {
-					min= "Soldado"+j+"x"+a;
+				if (ejercito.get(j).getVidaActual()>ejercito.get(i).getVidaActual()) {
+					min= j;
 				}
 			}
 			
-			aux=ejercito.get("Soldado"+i+"x"+a);
-			ejercito.put("Soldado"+i+"x"+a, ejercito.get(min));
-			ejercito.put(min, aux);
+			aux=ejercito.get(i);
+			ejercito.set(i, ejercito.get(min));
+			ejercito.set(min, aux);
 		}
 		
 		System.out.println("\nOrdenamiento Seleccion: \n");
 
 		for (int i=0;i<ejercito.size();i++) {
-			ejercitoTemp.put(ejercito.get("Soldado"+i+"x"+a).getNombre(), ejercito.get("Soldado"+i+"x"+a));
-			System.out.println(ejercito.get("Soldado"+i+"x"+a).getNombre()+"\t-\tColumna: "+
-			ejercito.get("Soldado"+i+"x"+a).getColumna()+"\tFila: "+ejercito.get("Soldado"+i+"x"+a).getFila()
-			+"  \tVida: "+ejercito.get("Soldado"+i+"x"+a).getVida());
+			System.out.println("Nombre: "+ejercito.get(i).getNombre()+"\t-\t"+"Columna: "+
+			(ejercito.get(i).getColumna()+1)+" \tFila: "+(ejercito.get(i).getFila()+1)+" \tVida"+
+			ejercito.get(i).getVidaActual());
 		}
 	}
 	
-	public static void ejercitoGanador(HashMap<String,Soldado>ejercito1,HashMap<String,Soldado>ejercito2) {
+	public static void ejercitoGanador(ArrayList<Soldado>ejercito1,ArrayList<Soldado>ejercito2) {
 		int vidaEjercito1=0,vidaEjercito2=0;
-		for (String key: ejercito1.keySet())
-			vidaEjercito1+=ejercito1.get(key).getVida();
-			;
-		for (String key: ejercito2.keySet())
-			vidaEjercito2+=ejercito2.get(key).getVida();
-			;
+		for (int i=0;i<ejercito1.size();i++) {
+			vidaEjercito1+=ejercito2.get(i).getVidaActual();
+		}
+		for (int i=0;i<ejercito1.size();i++) {
+			vidaEjercito2+=ejercito2.get(i).getVidaActual();
+		}
 			
 		System.out.println("\n---------------------------------------------");
 		if (vidaEjercito1>vidaEjercito2) {
